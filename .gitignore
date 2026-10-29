@@ -1,0 +1,5 @@
+data/
+checkpoints/
+runs/
+__pycache__/
+.venv/

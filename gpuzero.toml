@@ -1,0 +1,19 @@
+# The scripts GPU Zero may start from this repository, read at the commit a
+# run uses. Reference: https://gpuzero.dev/docs#gpuzero-toml
+version = 1
+
+[scripts.train]
+path = "train.py"
+# Each parameter reaches train.py as a flag (lr = 0.001 is --lr 0.001), and
+# the Launch page shows them to change before a run.
+params = { steps = 2000, batch = 32, seq = 64, width = 128, layers = 4, heads = 4, lr = 0.001 }
+# The ones that change the model itself: a run cannot carry on from a
+# checkpoint with one of these changed, so the console starts a new run instead.
+model = ["seq", "width", "layers", "heads"]
+
+# Where it runs: any of these GPUs, on spot nodes, and never more than 2 US
+# dollars for one launch. Leave the table out to use the workspace's choices
+# from the Compute page; it can only ask for less than those, never more.
+[compute]
+gpus = ["rtx-4090-24gb", "rtx-a5000-24gb", "rtx-a4000-16gb"]
+run_budget_usd = 2
